@@ -1,4 +1,6 @@
-module.exports = async function handler(req, res) {
+import { neon } from '@neondatabase/serverless';
+
+export default async function handler(req, res) {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
@@ -11,7 +13,6 @@ module.exports = async function handler(req, res) {
 
   try {
     // Test database connection
-    const { neon } = require('@neondatabase/serverless');
     const sql = neon(process.env.DATABASE_URL);
     
     const result = await sql`SELECT 1 as test`;
@@ -34,4 +35,4 @@ module.exports = async function handler(req, res) {
       error: error.message
     });
   }
-};
+}

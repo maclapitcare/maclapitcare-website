@@ -1,6 +1,6 @@
-const { neon } = require('@neondatabase/serverless');
+import { neon } from '@neondatabase/serverless';
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   const sql = neon(process.env.DATABASE_URL);
   // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -48,4 +48,4 @@ module.exports = async function handler(req, res) {
       message: 'Failed to submit booking request' 
     });
   }
-};
+}

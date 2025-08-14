@@ -1,29 +1,27 @@
-# MacLap IT Care - MacBook Repair Service
+# MacLap IT Care - Vercel Deployment
 
-Professional laptop repair service website for Delhi NCR.
+## Quick Deploy Steps:
 
-## Vercel Deployment Settings
+1. Replace all files in your GitHub repository with files from this folder
+2. Commit and push to GitHub
+3. Vercel will auto-deploy
 
-**Build Command:** `npm run build`  
-**Output Directory:** `dist/public`  
-**Install Command:** `npm install`
+## Vercel Settings:
+- **Build Command**: `npm run build`
+- **Output Directory**: `dist` 
+- **Install Command**: `npm install`
 
-## Required Environment Variables
+## Environment Variables:
+- `DATABASE_URL` - Your Neon PostgreSQL connection string
 
-- `DATABASE_URL` - PostgreSQL connection string
+## Fixed Issues:
+- ✅ API 404 errors (proper serverless function setup)
+- ✅ Page refresh 404 errors (SPA routing with fallback to index.html)
+- ✅ Database connection (ES modules compatibility)
 
-## Tech Stack
+## Test After Deployment:
+1. Visit `/api/test` - should show API working
+2. Refresh any page - should work without 404
+3. Submit booking form - should save to database
 
-- React + TypeScript frontend
-- Vercel Serverless Functions backend
-- PostgreSQL database (Neon)
-- Tailwind CSS styling
-
-## API Endpoints
-
-- `/api/contact` - Contact form submissions
-- `/api/service-booking` - Service booking requests
-
-## Deployment Notes
-
-This project uses Vercel serverless functions for the backend API. The `/api` folder contains individual serverless functions that handle form submissions and database operations.
+This is a clean, minimal deployment focused only on Vercel compatibility.
