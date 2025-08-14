@@ -18,6 +18,8 @@
 - ✅ API 404 errors (proper serverless function setup)
 - ✅ Page refresh 404 errors (SPA routing with fallback to index.html)
 - ✅ Database connection (ES modules compatibility)
+- ✅ npm installation errors (removed all Replit-specific dependencies)
+- ✅ Build process (clean Vite configuration)
 
 ## Test After Deployment:
 1. Visit `/api/test` - should show API working
