@@ -2,20 +2,21 @@
 
 Professional laptop repair service website for Delhi NCR.
 
-## Deployment
+## Vercel Deployment Settings
 
-This is a full-stack application built with:
-- React + TypeScript frontend
-- Express.js backend
-- PostgreSQL database
+**Build Command:** `npm run build`  
+**Output Directory:** `dist/public`  
+**Install Command:** `npm install`
 
-## Environment Variables Required
+## Required Environment Variables
 
-- `DATABASE_URL` - PostgreSQL connection string
+- `DATABASE_URL` - PostgreSQL connection string  
 - `NODE_ENV` - Set to "production"
 
-## Build Commands for Vercel
+## Tech Stack
 
-- Build Command: `npm run build`
-- Output Directory: `dist/public`
-- Install Command: `npm install`
+- React + TypeScript frontend
+- Express.js backend  
+- PostgreSQL database
+- Tailwind CSS styling
+- Full-stack application ready for Vercel deployment
