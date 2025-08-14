@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useMutation } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
 
 const bookingSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -75,19 +76,7 @@ export default function ServiceBookingModal({ isOpen, onClose, serviceName }: Se
         issueDescription: data.message,
       };
 
-      const response = await fetch('/api/service-booking', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(apiData),
-      });
-      
-      if (!response.ok) {
-        throw new Error('Failed to submit booking request');
-      }
-      
-      return response.json();
+      return await apiRequest("POST", "/api/service-booking", apiData);
     },
     onSuccess: () => {
       setIsSubmitted(true);
