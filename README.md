@@ -10,13 +10,20 @@ Professional laptop repair service website for Delhi NCR.
 
 ## Required Environment Variables
 
-- `DATABASE_URL` - PostgreSQL connection string  
-- `NODE_ENV` - Set to "production"
+- `DATABASE_URL` - PostgreSQL connection string
 
 ## Tech Stack
 
 - React + TypeScript frontend
-- Express.js backend  
-- PostgreSQL database
+- Vercel Serverless Functions backend
+- PostgreSQL database (Neon)
 - Tailwind CSS styling
-- Full-stack application ready for Vercel deployment
+
+## API Endpoints
+
+- `/api/contact` - Contact form submissions
+- `/api/service-booking` - Service booking requests
+
+## Deployment Notes
+
+This project uses Vercel serverless functions for the backend API. The `/api` folder contains individual serverless functions that handle form submissions and database operations.
