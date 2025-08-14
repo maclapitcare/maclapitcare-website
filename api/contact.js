@@ -1,8 +1,7 @@
-import { neon } from '@neondatabase/serverless';
+const { neon } = require('@neondatabase/serverless');
 
-const sql = neon(process.env.DATABASE_URL);
-
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
+  const sql = neon(process.env.DATABASE_URL);
   // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
@@ -49,4 +48,4 @@ export default async function handler(req, res) {
       message: 'Failed to submit contact form' 
     });
   }
-}
+};
