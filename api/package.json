@@ -1,0 +1,10 @@
+{
+  "type": "commonjs",
+  "dependencies": {
+    "@neondatabase/serverless": "^0.10.4",
+    "drizzle-orm": "^0.39.1",
+    "drizzle-zod": "^0.7.0",
+    "nodemailer": "^7.0.5",
+    "zod": "^3.24.2"
+  }
+}
