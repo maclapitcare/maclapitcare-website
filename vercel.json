@@ -1,0 +1,22 @@
+{
+  "functions": {
+    "api/test.js": {
+      "runtime": "@vercel/node@18.x"
+    },
+    "api/service-booking.js": {
+      "runtime": "@vercel/node@18.x"
+    },
+    "api/contact.js": {
+      "runtime": "@vercel/node@18.x"
+    }
+  },
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist/public",
+  "installCommand": "npm install --include=dev",
+  "rewrites": [
+    {
+      "source": "/((?!api).*)",
+      "destination": "/index.html"
+    }
+  ]
+}
