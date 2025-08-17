@@ -112,11 +112,11 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="relative gradient-bg text-white py-20 overflow-hidden min-h-[80vh]">
+    <section className="relative gradient-bg text-white py-12 sm:py-16 md:py-20 overflow-hidden min-h-[90vh] sm:min-h-[80vh]">
       {/* Background Pattern */}
       <div className="absolute inset-0 tech-pattern opacity-30"></div>
       
-      {/* Sliding Background Images */}
+      {/* Sliding Background Images - Mobile Optimized */}
       <div className="absolute inset-0">
         {heroImages.map((image, index) => (
           <div
@@ -127,14 +127,15 @@ export default function HeroSection() {
                 : 'opacity-0 scale-105'
             }`}
             style={{
-              backgroundImage: `url('${image.url}')`,
+              backgroundImage: `url('${image.url.replace('w=1920', 'w=800')}&fit=crop&crop=center')`,
               backgroundSize: "cover",
-              backgroundPosition: "center",
+              backgroundPosition: "center 30%",
+              backgroundAttachment: "scroll",
               transform: `translateX(${index === currentImageIndex ? '0%' : index < currentImageIndex ? '-100%' : '100%'})`
             }}
           >
-            {/* Gradient overlay for better text readability */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent"></div>
+            {/* Enhanced gradient overlay for mobile readability */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/80 md:bg-gradient-to-r md:from-black/70 md:via-black/50 md:to-transparent"></div>
           </div>
         ))}
       </div>
@@ -163,22 +164,22 @@ export default function HeroSection() {
             </span>
           </div>
           
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 fade-in-up">
-            <span className="text-blue-200">Premium Device Repair</span><br />
-            <span className="bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-6 fade-in-up leading-tight">
+            <span className="text-blue-200 block mb-2">Premium Device Repair</span>
+            <span className="bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent block mb-2 text-2xl sm:text-3xl md:text-5xl">
               MacBook • Surface • Gaming • iMac • Mac Mini
-            </span><br />
-            <span className="text-2xl md:text-3xl text-accent">Noida Delhi Gurgaon Doorstep Service</span>
+            </span>
+            <span className="text-xl sm:text-2xl md:text-3xl text-accent block">Noida Delhi Gurgaon Doorstep Service</span>
           </h1>
           
-          <p className="text-lg md:text-xl mb-8 max-w-3xl mx-auto fade-in-up stagger-1 text-blue-50">
+          <p className="text-base sm:text-lg md:text-xl mb-6 md:mb-8 max-w-3xl mx-auto fade-in-up stagger-1 text-blue-50 px-4 sm:px-0 leading-relaxed">
             {heroImages[currentImageIndex].description}. Professional repair services with 
             free pickup & delivery, genuine parts, and expert technicians across Delhi NCR.
           </p>
 
-          {/* Booking Form */}
-          <div className="bg-white/95 backdrop-blur-md rounded-2xl p-6 max-w-4xl mx-auto mb-8 fade-in-up stagger-2 shadow-2xl border border-white/20">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          {/* Booking Form - Mobile Optimized */}
+          <div className="bg-white/95 backdrop-blur-md rounded-2xl p-4 sm:p-6 max-w-4xl mx-auto mb-6 md:mb-8 fade-in-up stagger-2 shadow-2xl border border-white/20 mx-4 sm:mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
               <Select value={formData.location} onValueChange={(value) => setFormData({...formData, location: value})}>
                 <SelectTrigger className="bg-white text-black border-gray-300">
                   <SelectValue placeholder="Select Location" className="text-black" />
@@ -230,7 +231,7 @@ export default function HeroSection() {
                   handleBookDiagnosis();
                 }}
                 disabled={isSubmitting}
-                className="bg-gradient-to-r from-accent to-accent/80 hover:from-accent/90 hover:to-accent/70 text-accent-foreground font-semibold shadow-lg transform hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed w-full"
+                className="bg-gradient-to-r from-accent to-accent/80 hover:from-accent/90 hover:to-accent/70 text-accent-foreground font-semibold shadow-lg transform hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed w-full sm:col-span-2 md:col-span-1 py-3 text-sm sm:text-base"
               >
                 {isSubmitting ? "Submitting..." : isSubmitted ? "Request Sent!" : "Book Free Diagnosis"}
               </Button>
@@ -247,18 +248,18 @@ export default function HeroSection() {
             </div>
           )}
 
-          {/* Trust Indicators */}
-          <div className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-12 text-lg fade-in-up stagger-3">
-            <div className="flex items-center space-x-3 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 border border-white/20">
-              <CheckCircle className="h-6 w-6 text-accent" />
+          {/* Trust Indicators - Mobile Optimized */}
+          <div className="flex flex-col sm:flex-row justify-center items-center space-y-3 sm:space-y-0 sm:space-x-6 md:space-x-12 text-sm sm:text-base md:text-lg fade-in-up stagger-3 px-4">
+            <div className="flex items-center space-x-2 sm:space-x-3 bg-white/10 backdrop-blur-sm rounded-full px-3 sm:px-4 py-2 border border-white/20 w-full sm:w-auto justify-center">
+              <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-accent flex-shrink-0" />
               <span className="text-white font-medium">Free Doorstep Service</span>
             </div>
-            <div className="flex items-center space-x-3 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 border border-white/20">
-              <Shield className="h-6 w-6 text-accent" />
+            <div className="flex items-center space-x-2 sm:space-x-3 bg-white/10 backdrop-blur-sm rounded-full px-3 sm:px-4 py-2 border border-white/20 w-full sm:w-auto justify-center">
+              <Shield className="h-5 w-5 sm:h-6 sm:w-6 text-accent flex-shrink-0" />
               <span className="text-white font-medium">Up to 1 Year Warranty</span>
             </div>
-            <div className="flex items-center space-x-3 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 border border-white/20">
-              <Wrench className="h-6 w-6 text-accent" />
+            <div className="flex items-center space-x-2 sm:space-x-3 bg-white/10 backdrop-blur-sm rounded-full px-3 sm:px-4 py-2 border border-white/20 w-full sm:w-auto justify-center">
+              <Wrench className="h-5 w-5 sm:h-6 sm:w-6 text-accent flex-shrink-0" />
               <span className="text-white font-medium">Expert Technicians</span>
             </div>
           </div>

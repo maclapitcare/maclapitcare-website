@@ -1,7 +1,7 @@
 {
-  "buildCommand": "npm run build",
+  "buildCommand": "mkdir -p dist/public && cd client && npm install && npm run build && cd .. && cp -r client/dist/* dist/public/ && cp -r public/* dist/public/",
   "outputDirectory": "dist/public",
-  "installCommand": "npm install",
+  "installCommand": "echo 'Dependencies installed in build command'",
   "headers": [
     {
       "source": "/(.*\\.(png|jpg|jpeg|svg|webp|gif))",
