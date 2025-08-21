@@ -1,19 +1,4 @@
 {
-  "framework": "vite",
-  "buildCommand": "cd client && npm install && npm run build",
-  "outputDirectory": "client/dist",
-  "installCommand": "cd client && npm install",
-  "headers": [
-    {
-      "source": "/(.*\\.(png|jpg|jpeg|svg|webp|gif))$",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
-    }
-  ],
   "rewrites": [
     {
       "source": "/(.*)",
