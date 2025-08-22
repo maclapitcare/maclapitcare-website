@@ -1,0 +1,857 @@
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Link } from "wouter";
+import { Apple, CheckCircle, Star, ArrowRight, Search, Phone, MessageCircle, Shield, Clock, Wrench, Award, Users, MapPin, Monitor, Battery, Keyboard, HardDrive, Zap } from "lucide-react";
+import ServiceRequestForm from "@/components/forms/service-request-form";
+import { CONTACT_INFO } from "@/lib/constants";
+
+export default function MacBookRepair() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [hoveredButton, setHoveredButton] = useState<string | null>(null);
+
+  useEffect(() => {
+    document.title = "MacBook Repair Service Delhi NCR | MacBook Pro Air Repair Noida Sector 121 | MacLap IT Care";
+    
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute("content", "Expert MacBook repair service in Delhi NCR. MacBook Pro/Air screen, battery, keyboard, logic board repair. 15+ years experience. Free pickup/delivery. Same-day service. Call +91 92117 20790");
+    }
+
+    // Add structured data for SEO
+    const structuredData = {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "MacLap IT Care",
+      "description": "Professional MacBook repair service in Delhi NCR with 15+ years expertise",
+      "url": "https://maclapitcare.com/macbook-repair-service-delhi-ncr",
+      "telephone": "+919211720790",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Sector 121",
+        "addressLocality": "Noida",
+        "addressRegion": "Uttar Pradesh",
+        "postalCode": "201307",
+        "addressCountry": "IN"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "28.5706",
+        "longitude": "77.3272"
+      },
+      "openingHours": "Mo-Su 10:00-19:00",
+      "priceRange": "₹₹",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "5000"
+      },
+      "areaServed": [
+        "Delhi NCR", "Noida", "Gurgaon", "Ghaziabad", "Delhi"
+      ],
+      "serviceType": "MacBook Repair Service"
+    };
+
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(structuredData);
+    document.head.appendChild(script);
+
+    return () => {
+      // Cleanup script on unmount
+      const scripts = document.querySelectorAll('script[type="application/ld+json"]');
+      scripts.forEach(script => {
+        if (script.textContent && script.textContent.includes('MacLap IT Care')) {
+          script.remove();
+        }
+      });
+    };
+  }, []);
+
+  const services = [
+    {
+      title: "MacBook Pro Repair",
+      description: "Complete MacBook Pro repair service for all models with expert diagnosis",
+      price: "Starting from ₹3,499",
+      features: ["All MacBook Pro models", "Component-level repair", "Free diagnosis", "Up to 90 days warranty"]
+    },
+    {
+      title: "MacBook Screen Replacement",
+      description: "Professional screen replacement for all MacBook models with genuine displays",
+      price: "Starting from ₹4,999",
+      features: ["Original quality displays", "Same-day service", "Up to 3 months warranty"]
+    },
+    {
+      title: "MacBook Battery Replacement",
+      description: "Replace your MacBook battery with genuine parts for optimal performance",
+      price: "Starting from ₹3,999",
+      features: ["Genuine Apple batteries", "Free health check", "6-month warranty"]
+    },
+    {
+      title: "MacBook Keyboard Repair",
+      description: "Fix sticky keys, non-responsive keys, or complete keyboard replacement",
+      price: "Starting from ₹2,999",
+      features: ["Key-by-key repair", "Complete replacement", "Butterfly & scissor mechanism"]
+    },
+    {
+      title: "MacBook Trackpad Replacement",
+      description: "Professional trackpad replacement and repair for all MacBook models",
+      price: "Starting from ₹1,999",
+      features: ["Force Touch trackpad", "Multi-touch gestures", "30-day warranty"]
+    },
+    {
+      title: "Logic Board Repair",
+      description: "Advanced motherboard repair and component-level troubleshooting",
+      price: "Starting from ₹2,999",
+      features: ["Component-level repair", "Water damage recovery", "No fix, no fee"]
+    }
+  ];
+
+  const macbookModels = [
+    // Latest Apple Silicon Models (2020-2024)
+    { name: "MacBook Pro M3 Max 16-inch", model: "A2992", year: "2023-2024", chip: "M3 Max" },
+    { name: "MacBook Pro M3 Pro 14-inch", model: "A2918", year: "2023-2024", chip: "M3 Pro" },
+    { name: "MacBook Pro M3 14-inch", model: "A2991", year: "2023-2024", chip: "M3" },
+    { name: "MacBook Pro M3 16-inch", model: "A3021", year: "2023-2024", chip: "M3" },
+    { name: "MacBook Air M3 15-inch", model: "A3114", year: "2024", chip: "M3" },
+    { name: "MacBook Air M3 13-inch", model: "A3113", year: "2024", chip: "M3" },
+    { name: "MacBook Air M2 15-inch", model: "A2941", year: "2023", chip: "M2" },
+    { name: "MacBook Air M2 13-inch", model: "A2681", year: "2022-2023", chip: "M2" },
+    { name: "MacBook Pro M2 Max 16-inch", model: "A2780", year: "2023", chip: "M2 Max" },
+    { name: "MacBook Pro M2 Pro 14-inch", model: "A2779", year: "2023", chip: "M2 Pro" },
+    { name: "MacBook Pro M1 Max 16-inch", model: "A2485", year: "2021", chip: "M1 Max" },
+    { name: "MacBook Pro M1 Pro 14-inch", model: "A2442", year: "2021", chip: "M1 Pro" },
+    { name: "MacBook Pro M1 13-inch", model: "A2338", year: "2020-2021", chip: "M1" },
+    { name: "MacBook Air M1", model: "A2337", year: "2020-2021", chip: "M1" },
+    
+    // Intel MacBook Pro Models (2016-2020)
+    { name: "MacBook Pro 16-inch Intel", model: "A2141", year: "2019-2020", chip: "Intel i7/i9" },
+    { name: "MacBook Pro 13-inch 4 Ports", model: "A2289", year: "2020", chip: "Intel i5/i7" },
+    { name: "MacBook Pro 13-inch 2 Ports", model: "A2251", year: "2020", chip: "Intel i5/i7" },
+    { name: "MacBook Pro 13-inch Touch Bar", model: "A2159", year: "2019", chip: "Intel i5/i7" },
+    { name: "MacBook Pro 15-inch Touch Bar", model: "A1990", year: "2018-2019", chip: "Intel i7/i9" },
+    { name: "MacBook Pro 13-inch Touch Bar", model: "A1989", year: "2018", chip: "Intel i5/i7" },
+    { name: "MacBook Pro 15-inch Touch Bar", model: "A1707", year: "2016-2017", chip: "Intel i7" },
+    { name: "MacBook Pro 13-inch Touch Bar", model: "A1706", year: "2016-2017", chip: "Intel i5/i7" },
+    { name: "MacBook Pro 13-inch No Touch Bar", model: "A1708", year: "2016-2017", chip: "Intel i5/i7" },
+    
+    // Intel MacBook Air Models (2017-2020)
+    { name: "MacBook Air 13-inch Retina", model: "A2179", year: "2020", chip: "Intel i3/i5/i7" },
+    { name: "MacBook Air 13-inch Retina", model: "A1932", year: "2018-2019", chip: "Intel i5" },
+    { name: "MacBook Air 13-inch", model: "A1466", year: "2017", chip: "Intel i5/i7" },
+    { name: "MacBook Air 11-inch", model: "A1465", year: "2015-2017", chip: "Intel i5/i7" },
+    
+    // Legacy Intel Models (2012-2016)
+    { name: "MacBook Pro 15-inch Mid 2015", model: "A1398", year: "2015", chip: "Intel i7" },
+    { name: "MacBook Pro 13-inch Mid 2014", model: "A1502", year: "2014", chip: "Intel i5/i7" },
+    { name: "MacBook Pro 15-inch Mid 2012", model: "A1286", year: "2012", chip: "Intel i7" },
+    { name: "MacBook Pro 13-inch Mid 2012", model: "A1278", year: "2012", chip: "Intel i5/i7" },
+    { name: "MacBook Air 13-inch Mid 2013", model: "A1466", year: "2013-2016", chip: "Intel i5/i7" },
+    { name: "MacBook Air 11-inch Mid 2013", model: "A1465", year: "2013-2015", chip: "Intel i5/i7" },
+    
+    // MacBook 12-inch (Discontinued)
+    { name: "MacBook 12-inch", model: "A1534", year: "2015-2017", chip: "Intel Core M" },
+    
+    // PowerPC Models (Historical)
+    { name: "MacBook Pro 17-inch", model: "A1297", year: "2009-2011", chip: "Intel i5/i7" },
+    { name: "MacBook White Polycarbonate", model: "A1342", year: "2009-2010", chip: "Intel Core 2 Duo" }
+  ];
+
+  const quickStats = [
+    { icon: Clock, title: "4-5 Hours", description: "Average repair time", gradient: "from-blue-500 to-indigo-600" },
+    { icon: Shield, title: "Up to 3 Months", description: "Comprehensive warranty", gradient: "from-green-500 to-emerald-600" },
+    { icon: Users, title: "5,000+", description: "Happy customers", gradient: "from-purple-500 to-pink-600" },
+    { icon: Award, title: "15+ Years", description: "Repair expertise", gradient: "from-orange-500 to-red-600" }
+  ];
+
+  const testimonials = [
+    {
+      name: "Rajesh Kumar",
+      rating: 5,
+      comment: "MacLap IT Care fixed my MacBook Pro M1 screen perfectly. Professional service, original parts, and completed in just 3 hours. Highly recommended!",
+      location: "Noida Sector 121",
+      service: "Screen Replacement",
+      device: "MacBook Pro M1"
+    },
+    {
+      name: "Priya Sharma", 
+      rating: 5,
+      comment: "Battery replacement service was excellent. My MacBook Air battery life is now back to normal. Great work by MacLap IT Care team!",
+      location: "Delhi",
+      service: "Battery Replacement",
+      device: "MacBook Air M2"
+    },
+    {
+      name: "Amit Singh",
+      rating: 5,
+      comment: "Logic board repair saved my MacBook from water damage. MacLap IT Care team worked miracles. Worth every penny!",
+      location: "Gurgaon",
+      service: "Logic Board Repair",
+      device: "MacBook Pro 2019"
+    },
+    {
+      name: "Sneha Gupta",
+      rating: 5,
+      comment: "Keyboard replacement was done professionally with genuine parts. My MacBook Pro typing experience is like new again!",
+      location: "Ghaziabad",
+      service: "Keyboard Repair",
+      device: "MacBook Pro Touch Bar"
+    }
+  ];
+
+  const whyChooseUs = [
+    {
+      icon: Shield,
+      title: "Authorized Service Quality",
+      description: "15+ years expertise with Apple-trained technicians providing authorized service center quality repairs."
+    },
+    {
+      icon: Zap,
+      title: "Same-Day Service",
+      description: "Most MacBook repairs completed within 2-4 hours. Emergency repair services available for urgent needs."
+    },
+    {
+      icon: Award,
+      title: "Genuine Parts Guarantee",
+      description: "Original Apple parts and high-quality OEM alternatives with transparent part selection process."
+    },
+    {
+      icon: MapPin,
+      title: "Doorstep Convenience",
+      description: "Free pickup and delivery service across Delhi NCR. No need to visit our service center."
+    }
+  ];
+
+  const filteredModels = macbookModels.filter(model => 
+    model.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    model.model.toLowerCase().includes(searchTerm.toLowerCase()) ||
+(searchTerm.toLowerCase())
+  );
+
+  return (
+    <div>
+      {/* Hero Section */}
+      <section className="gradient-bg text-white py-16">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="flex items-center justify-center mb-6">
+              <Apple className="h-16 w-16 mr-4" />
+            </div>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+              MacBook Repair Services in Delhi NCR
+            </h1>
+            <p className="text-xl mb-8">
+              Expert MacBook repair services for all models by MacLap IT Care. Screen replacement, battery repair, 
+              keyboard fixes, and logic board repairs with genuine parts and 15+ years professional expertise.
+            </p>
+            <div className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-8">
+              <div className="flex items-center space-x-2">
+                <CheckCircle className="h-5 w-5 text-accent" />
+                <span>Free Diagnosis</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <CheckCircle className="h-5 w-5 text-accent" />
+                <span>Genuine Parts</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <CheckCircle className="h-5 w-5 text-accent" />
+                <span>Same-Day Service</span>
+              </div>
+            </div>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6 mt-8">
+              <a
+                href={`tel:${CONTACT_INFO.phone1}`}
+                className="inline-flex items-center justify-center bg-white text-primary font-bold py-3 px-8 rounded-full hover:bg-gray-100 transition-colors"
+              >
+                <Phone className="mr-2 h-5 w-5" />
+                Call Now: {CONTACT_INFO.phone1}
+              </a>
+              <a
+                href={`https://wa.me/${CONTACT_INFO.phone1.replace(/\s+/g, '')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full transition-colors"
+              >
+                <MessageCircle className="mr-2 h-5 w-5" />
+                WhatsApp Now
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Quick Stats Section */}
+      <section className="py-12 sm:py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+            {quickStats.map((stat, index) => {
+              const IconComponent = stat.icon;
+              return (
+                <Card key={index} className="text-center p-3 sm:p-4 md:p-6 hover:shadow-lg transition-all duration-300">
+                  <CardContent className="p-0">
+                    <div className={`w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 mx-auto mb-2 sm:mb-3 md:mb-4 rounded-full bg-gradient-to-r ${stat.gradient} flex items-center justify-center`}>
+                      <IconComponent className="h-5 w-5 sm:h-6 sm:w-6 md:h-8 md:w-8 text-white" />
+                    </div>
+                    <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 mb-1 sm:mb-2 leading-tight">{stat.title}</h3>
+                    <p className="text-xs sm:text-sm md:text-base text-gray-600 leading-relaxed">{stat.description}</p>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* MacBook Model Search Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Find Your MacBook Model</h2>
+            <p className="text-xl text-gray-600 mb-8">
+              Search for your MacBook model to get specific repair information and pricing
+            </p>
+            
+            {/* Search Bar */}
+            <div className="max-w-lg mx-auto relative">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <Input
+                  type="text"
+                  placeholder="Search MacBook model (e.g., A2337, MacBook Pro M1, M3 chip)"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10 pr-4 py-3 w-full border-2 border-gray-300 focus:border-primary rounded-lg text-lg"
+                />
+              </div>
+              {searchTerm && (
+                <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => setSearchTerm("")}
+                    className="h-8 w-8 p-0"
+                  >
+                    ×
+                  </Button>
+                </div>
+              )}
+            </div>
+
+            {/* Model Count Display */}
+            <div className="text-center mt-4">
+              <p className="text-gray-600">
+                {searchTerm ? `Found ${filteredModels.length} models` : `Showing all ${macbookModels.length} MacBook models`}
+              </p>
+            </div>
+          </div>
+
+          {/* MacBook Models Scrollable Grid */}
+          <div className="relative">
+            {/* Category Filters */}
+            <div className="flex justify-center mb-6">
+              <div className="flex flex-wrap gap-2 bg-gray-100 p-2 rounded-lg">
+                <Button
+                  size="sm"
+                  variant={searchTerm === "" ? "default" : "ghost"}
+                  onClick={() => setSearchTerm("")}
+                  className="rounded-md"
+                >
+                  All Models
+                </Button>
+                <Button
+                  size="sm"
+                  variant={searchTerm === "M3" ? "default" : "ghost"}
+                  onClick={() => setSearchTerm("M3")}
+                  className="rounded-md"
+                >
+                  M3 Chip
+                </Button>
+                <Button
+                  size="sm"
+                  variant={searchTerm === "M2" ? "default" : "ghost"}
+                  onClick={() => setSearchTerm("M2")}
+                  className="rounded-md"
+                >
+                  M2 Chip
+                </Button>
+                <Button
+                  size="sm"
+                  variant={searchTerm === "M1" ? "default" : "ghost"}
+                  onClick={() => setSearchTerm("M1")}
+                  className="rounded-md"
+                >
+                  M1 Chip
+                </Button>
+                <Button
+                  size="sm"
+                  variant={searchTerm === "Intel" ? "default" : "ghost"}
+                  onClick={() => setSearchTerm("Intel")}
+                  className="rounded-md"
+                >
+                  Intel
+                </Button>
+              </div>
+            </div>
+
+            {/* Scrollable Container */}
+            <div 
+              className="overflow-x-auto pb-4 scroll-smooth" 
+              style={{ 
+                scrollbarWidth: 'thin',
+                scrollbarColor: '#6366f1 #e5e7eb'
+              }}
+            >
+              <div className="flex space-x-6" style={{ width: 'max-content' }}>
+                {filteredModels.map((model, index) => (
+                  <Card 
+                    key={index} 
+                    className="flex-shrink-0 w-80 hover:shadow-lg transition-all duration-300 border-l-4 border-l-primary hover:scale-105"
+                  >
+                    <CardContent className="p-6">
+                      <div className="flex items-start justify-between mb-3">
+                        <h3 className="font-bold text-gray-900 text-lg leading-tight">{model.name}</h3>
+                        <Badge 
+                          variant="secondary" 
+                          className={`ml-2 flex-shrink-0 ${
+                            model.chip.includes('M3') ? 'bg-purple-100 text-purple-800' :
+                            model.chip.includes('M2') ? 'bg-blue-100 text-blue-800' :
+                            model.chip.includes('M1') ? 'bg-green-100 text-green-800' :
+                            'bg-gray-100 text-gray-800'
+                          }`}
+                        >
+                          {model.chip}
+                        </Badge>
+                      </div>
+                      
+                      <div className="space-y-2 mb-4">
+                        <p className="text-gray-600">
+                          <span className="font-semibold">Model:</span> {model.model}
+                        </p>
+                        <p className="text-gray-600">
+                          <span className="font-semibold">Year:</span> {model.year}
+                        </p>
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <Button 
+                          size="sm" 
+                          className="w-full bg-primary hover:bg-primary/90"
+                          onClick={() => typeof window !== "undefined" && window.open(`tel:${CONTACT_INFO.phone1}`, '_self')}
+                        >
+                          <Phone className="mr-2 h-4 w-4" />
+                          Call for Quote
+                        </Button>
+                        <Button 
+                          size="sm" 
+                          variant="outline"
+                          className="w-full"
+                          onClick={() => typeof window !== "undefined" && window.open(`https://wa.me/${CONTACT_INFO.phone1.replace(/\s+/g, '')}?text=Hi! I need repair quote for ${model.name} (${model.model})`, '_blank')}
+                        >
+                          <MessageCircle className="mr-2 h-4 w-4" />
+                          WhatsApp Quote
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+
+            {/* Scroll Indicators and Navigation */}
+            {filteredModels.length > 4 && (
+              <div className="flex justify-center items-center mt-6 space-x-4">
+                <div className="flex items-center text-sm text-gray-500">
+                  <ArrowRight className="h-4 w-4 mr-1" />
+                  Scroll horizontally to see more models
+                </div>
+                <div className="text-sm text-gray-500">
+                  {filteredModels.length} models available
+                </div>
+              </div>
+            )}
+
+            {/* Quick Stats for Filtered Models */}
+            {searchTerm && filteredModels.length > 0 && (
+              <div className="mt-6 bg-primary/5 rounded-lg p-4">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                  <div>
+                    <p className="text-2xl font-bold text-primary">{filteredModels.length}</p>
+                    <p className="text-sm text-gray-600">Models Found</p>
+                  </div>
+                  <div>
+                    <p className="text-2xl font-bold text-primary">
+                      {new Set(filteredModels.map(m => m.chip.split(' ')[0])).size}
+                    </p>
+                    <p className="text-sm text-gray-600">Chip Types</p>
+                  </div>
+                  <div>
+                    <p className="text-2xl font-bold text-primary">
+                      {Math.min(...filteredModels.map(m => parseInt(m.year.split('-')[0])))} - {Math.max(...filteredModels.map(m => parseInt(m.year.split('-')[1] || m.year.split('-')[0])))}
+                    </p>
+                    <p className="text-sm text-gray-600">Year Range</p>
+                  </div>
+                  <div>
+                    <p className="text-2xl font-bold text-primary">2-4 hrs</p>
+                    <p className="text-sm text-gray-600">Avg Repair Time</p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+          
+          {filteredModels.length === 0 && searchTerm && (
+            <div className="text-center py-12">
+              <div className="max-w-md mx-auto">
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">No models found</h3>
+                <p className="text-gray-600 mb-4">
+                  We couldn't find any MacBook models matching "{searchTerm}". Try searching with different terms like model number, year, or chip type.
+                </p>
+                <Button 
+                  onClick={() => setSearchTerm("")} 
+                  className="bg-primary hover:bg-primary/90"
+                >
+                  View All {macbookModels.length} Models
+                </Button>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Services Grid */}
+      <section className="py-20 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold text-foreground mb-4">MacBook Repair Services</h2>
+            <p className="text-xl text-muted-foreground">
+              Comprehensive repair solutions for all MacBook models
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-12">
+            {services.map((service, index) => (
+              <Card key={service.title} className="hover:shadow-lg transition-shadow h-full flex flex-col">
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-lg sm:text-xl leading-tight">{service.title}</CardTitle>
+                  <p className="text-xl sm:text-2xl font-bold text-primary">{service.price}</p>
+                </CardHeader>
+                <CardContent className="flex-1 flex flex-col">
+                  <p className="text-muted-foreground mb-4 text-sm sm:text-base leading-relaxed">{service.description}</p>
+                  <div className="space-y-2 mb-4 flex-1">
+                    {service.features.map((feature) => (
+                      <div key={feature} className="flex items-start space-x-2">
+                        <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 text-accent mt-0.5 flex-shrink-0" />
+                        <span className="text-xs sm:text-sm leading-relaxed">{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <Button 
+                    className="w-full bg-primary hover:bg-primary/90 text-white text-sm sm:text-base py-2 sm:py-3"
+                    onClick={() => {
+                      const element = document.querySelector('#service-request-form');
+                      if (element) {
+                        element.scrollIntoView({ behavior: 'smooth' });
+                      }
+                    }}
+                  >
+                    Book This Service
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Process Section */}
+      <section className="py-20 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold text-foreground mb-4">Our Repair Process</h2>
+            <p className="text-xl text-muted-foreground">
+              Simple, transparent, and professional repair process
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {[
+              { step: "1", title: "Free Diagnosis", description: "We inspect your MacBook and provide a detailed diagnosis" },
+              { step: "2", title: "Quote & Approval", description: "Get transparent pricing and approve the repair" },
+              { step: "3", title: "Professional Repair", description: "Our experts fix your MacBook with genuine parts" },
+              { step: "4", title: "Quality Testing", description: "Thorough testing before returning your device" }
+            ].map((item, index) => (
+              <div key={item.step} className="text-center">
+                <div className="bg-primary text-primary-foreground rounded-full w-16 h-16 flex items-center justify-center text-2xl font-bold mx-auto mb-4">
+                  {item.step}
+                </div>
+                <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
+                <p className="text-muted-foreground">{item.description}</p>
+                {index < 3 && <ArrowRight className="h-6 w-6 text-primary mx-auto mt-4 hidden md:block" />}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Why Choose MacLap IT Care */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Why Choose MacLap IT Care?</h2>
+            <p className="text-xl text-gray-600">
+              15+ years of MacBook repair expertise across Delhi NCR
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {whyChooseUs.map((item, index) => (
+              <Card key={index} className="hover:shadow-lg transition-all duration-300">
+                <CardContent className="p-8">
+                  <div className="flex items-start space-x-4">
+                    <div className="bg-primary/10 p-3 rounded-lg flex-shrink-0">
+                      <item.icon className="h-8 w-8 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-3">{item.title}</h3>
+                      <p className="text-gray-600">{item.description}</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Enhanced Customer Reviews */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">MacLap IT Care Customer Reviews</h2>
+            <p className="text-xl text-gray-600 mb-8">
+              Real experiences from our satisfied MacBook repair customers across Delhi NCR
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            {testimonials.map((testimonial, index) => (
+              <Card 
+                key={testimonial.name} 
+                className="hover:shadow-lg transition-all duration-300 border-l-4 border-l-yellow-400"
+              >
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex text-yellow-400">
+                      {[...Array(testimonial.rating)].map((_, i) => (
+                        <Star key={i} className="h-5 w-5 fill-current" />
+                      ))}
+                    </div>
+                    <Badge variant="secondary" className="bg-primary/10 text-primary">
+                      {testimonial.service}
+                    </Badge>
+                  </div>
+                  
+                  <p className="text-gray-700 mb-4 leading-relaxed">"{testimonial.comment}"</p>
+                  
+                  <div className="border-t pt-4">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="font-bold text-gray-900">{testimonial.name}</p>
+                        <p className="text-gray-600 text-sm">{testimonial.location}</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm text-gray-500">{testimonial.device}</p>
+                        <div className="flex items-center text-sm text-primary font-semibold">
+                          <CheckCircle className="h-4 w-4 mr-1" />
+                          Verified Customer
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          {/* Review CTA */}
+          <div className="text-center mt-12">
+            <div className="bg-gradient-to-r from-primary/10 to-accent/10 rounded-lg p-8 max-w-2xl mx-auto">
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Join 5,000+ Happy Customers</h3>
+              <p className="text-gray-600 mb-6">
+                Experience MacLap IT Care's professional MacBook repair service with same-day turnaround and genuine parts warranty.
+              </p>
+              <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <a
+                  href={`tel:${CONTACT_INFO.phone1}`}
+                  className="inline-flex items-center justify-center bg-primary hover:bg-primary/90 text-white font-bold py-3 px-8 rounded-full transition-colors"
+                >
+                  <Phone className="mr-2 h-5 w-5" />
+                  Call Now: {CONTACT_INFO.phone1}
+                </a>
+                <a
+                  href={`https://wa.me/${CONTACT_INFO.phone1.replace(/\s+/g, '')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full transition-colors"
+                >
+                  <MessageCircle className="mr-2 h-5 w-5" />
+                  WhatsApp Now
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* MacBook Repair FAQ Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">MacBook Repair Frequently Asked Questions</h2>
+            <p className="text-xl text-gray-600">
+              Common questions about MacLap IT Care's MacBook repair services
+            </p>
+          </div>
+
+          <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="space-y-6">
+              <Card className="p-6">
+                <h3 className="font-bold text-lg text-gray-900 mb-3">How much does MacBook screen repair cost?</h3>
+                <p className="text-gray-600">MacBook screen replacement starts from ₹4,999 for older models and varies based on your specific MacBook model. MacLap IT Care offers up to 45% savings compared to Apple Store pricing with same quality service.</p>
+              </Card>
+              
+              <Card className="p-6">
+                <h3 className="font-bold text-lg text-gray-900 mb-3">Do you use genuine MacBook parts?</h3>
+                <p className="text-gray-600">Yes, MacLap IT Care uses genuine Apple parts and high-quality OEM alternatives. We clearly explain which parts we're using and offer both options based on your budget and requirements.</p>
+              </Card>
+              
+              <Card className="p-6">
+                <h3 className="font-bold text-lg text-gray-900 mb-3">How long does MacBook repair take?</h3>
+                <p className="text-gray-600">Most MacBook repairs are completed within 4-5 hours. Complex repairs like logic board issues may take 1-2 days. MacLap IT Care offers same-day service for urgent repairs.</p>
+              </Card>
+            </div>
+            
+            <div className="space-y-6">
+              <Card className="p-6">
+                <h3 className="font-bold text-lg text-gray-900 mb-3">What warranty do you provide?</h3>
+                <p className="text-gray-600">MacLap IT Care provides comprehensive warranty: up to 3 months on screen replacement, up to 3 months on battery replacement, and 30 days on trackpad replacement covering both parts and labor.</p>
+              </Card>
+              
+              <Card className="p-6">
+                <h3 className="font-bold text-lg text-gray-900 mb-3">Do you offer pickup and delivery?</h3>
+                <p className="text-gray-600">Yes! MacLap IT Care provides pickup and delivery service across Delhi NCR. Our technician will collect your MacBook, complete the repair, and deliver it back to your location.</p>
+              </Card>
+              
+              <Card className="p-6">
+                <h3 className="font-bold text-lg text-gray-900 mb-3">Can you repair water-damaged MacBooks?</h3>
+                <p className="text-gray-600">Absolutely! MacLap IT Care specializes in liquid damage recovery with over 85% success rate. We use professional ultrasonic cleaning and component-level repair techniques.</p>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Common MacBook Searches Section */}
+      <section className="py-12 sm:py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-8 sm:mb-12">
+            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-semibold mb-4 sm:mb-6">
+              <Search className="h-3 w-3 sm:h-4 sm:w-4" />
+              Most Searched MacBook Issues
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4 px-4">Common MacBook Search Terms</h2>
+            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto px-4">
+              Popular MacBook repair searches from customers across Delhi NCR
+            </p>
+          </div>
+
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+              {[
+                "MacBook screen replacement cost Delhi",
+                "MacBook Pro battery replacement Noida",
+                "MacBook Air keyboard repair near me",
+                "MacBook liquid damage repair Delhi NCR",
+                "MacBook Pro M1 screen repair price",
+                "MacBook trackpad not working fix",
+                "MacBook Air 13 inch battery replacement",
+                "MacBook Pro logic board repair cost",
+                "MacBook screen flickering repair",
+                "MacBook Pro Touch Bar not working",
+                "MacBook charging port repair Delhi",
+                "MacBook Pro overheating solution",
+                "MacBook Air SSD upgrade Noida",
+                "MacBook Pro fan noise repair",
+                "MacBook screen black but on repair"
+              ].map((search, index) => (
+                <div 
+                  key={index} 
+                  className="group bg-gray-50 hover:bg-primary/5 p-3 sm:p-4 rounded-lg border border-gray-200 hover:border-primary/30 transition-all duration-300 cursor-pointer hover:-translate-y-1"
+                >
+                  <div className="flex items-start space-x-2 sm:space-x-3">
+                    <div className="w-5 h-5 sm:w-6 sm:h-6 bg-gradient-to-br from-primary to-accent rounded-md flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <span className="text-white font-bold text-xs">{index + 1}</span>
+                    </div>
+                    <p className="text-xs sm:text-sm text-gray-700 group-hover:text-primary transition-colors leading-relaxed">
+                      {search}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="text-center mt-8 sm:mt-12">
+              <div className="bg-gradient-to-r from-primary/10 to-accent/10 rounded-xl p-4 sm:p-6 md:p-8 border border-primary/20">
+                <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4">Need Help with Your MacBook Issue?</h3>
+                <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6 leading-relaxed px-2">
+                  Can't find your specific MacBook problem? Our MacBook specialists can diagnose and fix any MacBook model with professional expertise and genuine parts warranty.
+                </p>
+                <div className="flex flex-col gap-3 sm:flex-row sm:justify-center sm:items-center sm:gap-4 max-w-md mx-auto">
+                  <a
+                    href={`tel:${CONTACT_INFO.phone1}`}
+                    className="inline-flex items-center justify-center bg-primary hover:bg-primary/90 text-white font-bold py-2.5 sm:py-3 px-6 sm:px-8 rounded-full transition-colors text-sm sm:text-base"
+                  >
+                    <Phone className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                    Call for Diagnosis
+                  </a>
+                  <a
+                    href={`https://wa.me/${CONTACT_INFO.phone1.replace(/\s+/g, '')}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center bg-green-500 hover:bg-green-600 text-white font-bold py-2.5 sm:py-3 px-6 sm:px-8 rounded-full transition-colors text-sm sm:text-base"
+                  >
+                    <MessageCircle className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                    WhatsApp Expert
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Service Request Form */}
+      <section id="service-request-form" className="py-20 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="max-w-2xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-foreground mb-4">Book MacBook Repair Service</h2>
+              <p className="text-xl text-muted-foreground">
+                Fill out the form below and we'll contact you for free diagnosis
+              </p>
+            </div>
+            <Card>
+              <CardContent className="p-8">
+                <ServiceRequestForm />
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
