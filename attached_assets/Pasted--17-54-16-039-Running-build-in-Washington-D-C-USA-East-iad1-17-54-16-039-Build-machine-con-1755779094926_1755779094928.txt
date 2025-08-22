@@ -1,0 +1,44 @@
+[17:54:16.039] Running build in Washington, D.C., USA (East) – iad1
+[17:54:16.039] Build machine configuration: 2 cores, 8 GB
+[17:54:16.054] Cloning github.com/maclapitcare/maclapitcare-website (Branch: main, Commit: 86e1a79)
+[17:54:16.165] Previous build caches not available
+[17:54:17.055] Cloning completed: 1.001s
+[17:54:17.363] Running "vercel build"
+[17:54:17.756] Vercel CLI 46.0.2
+[17:54:18.446] Running "install" command: `npm install`...
+[17:54:40.163] 
+[17:54:40.164] added 257 packages, and audited 258 packages in 21s
+[17:54:40.164] 
+[17:54:40.164] 43 packages are looking for funding
+[17:54:40.165]   run `npm fund` for details
+[17:54:40.170] 
+[17:54:40.170] 2 moderate severity vulnerabilities
+[17:54:40.171] 
+[17:54:40.171] To address all issues (including breaking changes), run:
+[17:54:40.171]   npm audit fix --force
+[17:54:40.171] 
+[17:54:40.172] Run `npm audit` for details.
+[17:54:40.414] 
+[17:54:40.418] > maclapitcare-website@1.0.0 build
+[17:54:40.418] > vite build
+[17:54:40.418] 
+[17:54:40.648] [36mvite v5.4.19 [32mbuilding for production...[36m[39m
+[17:54:40.695] transforming...
+[17:54:41.006] [32m✓[39m 3 modules transformed.
+[17:54:41.008] [31mx[39m Build failed in 336ms
+[17:54:41.009] [31merror during build:
+[17:54:41.009] [31m[vite:css] [postcss] Cannot find module '@tailwindcss/typography'
+[17:54:41.009] Require stack:
+[17:54:41.009] - /vercel/path0/tailwind.config.ts[31m
+[17:54:41.009] file: [36m/vercel/path0/src/index.css:undefined:NaN[31m
+[17:54:41.010]     at Function._resolveFilename (node:internal/modules/cjs/loader:1365:15)
+[17:54:41.010]     at Function.resolve (node:internal/modules/helpers:145:19)
+[17:54:41.010]     at _resolve (/vercel/path0/node_modules/jiti/dist/jiti.js:1:246378)
+[17:54:41.010]     at jiti (/vercel/path0/node_modules/jiti/dist/jiti.js:1:249092)
+[17:54:41.010]     at /vercel/path0/tailwind.config.ts:89:45
+[17:54:41.010]     at evalModule (/vercel/path0/node_modules/jiti/dist/jiti.js:1:251913)
+[17:54:41.011]     at jiti (/vercel/path0/node_modules/jiti/dist/jiti.js:1:249841)
+[17:54:41.011]     at /vercel/path0/node_modules/tailwindcss/lib/lib/load-config.js:52:26
+[17:54:41.011]     at loadConfig (/vercel/path0/node_modules/tailwindcss/lib/lib/load-config.js:62:6)
+[17:54:41.011]     at getTailwindConfig (/vercel/path0/node_modules/tailwindcss/lib/lib/setupTrackingContext.js:71:116)[39m
+[17:54:41.031] Error: Command "npm run build" exited with 1
